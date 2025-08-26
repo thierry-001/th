@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultura do Cancelamento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Player de música -->
+  <div id="player" onclick="tocarMusica()">🔊</div>
+
+  <!-- Música de fundo -->
+  <audio id="musica-fundo" src="audio/musica.mp3" loop></audio>
+
+  <!-- Contador de visitantes -->
+  <div id="contador-visitantes">
+    <span class="icone">&#128100;</span>
+    <span id="num-visitantes">0</span>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header>
+    <h1>Cultura do Cancelamento</h1>
+    <p class="slogan">“E se fosse com você?”</p>
+    <nav>
+      <ul>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#enquete">Sua Voz</a></li>
+        <li><a href="#minijogo">Mini-jogo</a></li>
+        <li><a href="#reacoes">Reações</a></li>
+        <li><a href="#reflexao">Reflexão</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Quiz -->
+    <section id="quiz" class="card">
+      <h2>Quiz: Como você reage?</h2>
+      <div id="quiz-container">
+        <button id="btn-quiz" onclick="iniciarQuiz()">Começar Quiz</button>
+      </div>
+      <p id="resultado-quiz"></p>
+    </section>
+
+    <!-- Enquete / Sugestão -->
+    <section id="enquete" class="card">
+      <h2>Sua voz tem espaço</h2>
+      <p>Escreva uma reflexão ou compartilhe uma frase que inspire:</p>
+      <div class="input-area">
+        <input type="text" id="sugestao-enquete" placeholder="Digite sua mensagem...">
+        <button onclick="adicionarSugestao()">Enviar</button>
+        <button onclick="limparSugestoes()">Limpar</button>
+      </div>
+      <ul id="sugestoes-lista"></ul>
+    </section>
+
+    <!-- Mini-jogo rápido -->
+    <section id="minijogo" class="card">
+      <h2>Mini-jogo rápido: Classifique a Situação</h2>
+      <p>Arraste cada frase para "Crítica" ou "Cancelamento".</p>
+      <div id="jogo-container"></div>
+      <button onclick="startMiniGame()">Começar Minijogo</button>
+    </section>
+
+    <!-- Reações com emojis -->
+    <section id="reacoes" class="card">
+      <h2>O que você achou da nossa apresentação?</h2>
+      <p>Escolha o emoji que representa sua opinião:</p>
+      <div id="emoji-container">
+        <button onclick="votarEmoji('Ótimo')">😃 Ótimo <span id="Ótimo">0</span></button>
+        <button onclick="votarEmoji('Bom')">🙂 Bom <span id="Bom">0</span></button>
+        <button onclick="votarEmoji('Regular')">😐 Regular <span id="Regular">0</span></button>
+        <button onclick="limparEmojis()">Limpar</button>
+      </div>
+    </section>
+
+    <!-- Reflexão final -->
+    <section id="reflexao" class="card destaque-final">
+      <h2>Reflexão</h2>
+      <p class="frase-final">“Talvez o maior engano da vida seja achar que sempre haverá tempo — tempo pra perdoar, pra tentar de novo, pra dizer o que sente, pra mudar o caminho... até que um dia, o tempo que você achava que tinha vira exatamente aquilo que te falta.”</p>
+      <p class="destaque"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projeto Escolar – Cultura do Cancelamento</p>
+    <small>Site desenvolvido por Thierry</small>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function tocarMusica() {
+      const musica = document.getElementById("musica-fundo");
+      if (musica.paused) {
+        musica.volume = 0.5;
+        musica.play();
+      } else {
+        musica.pause();
+      }
+    }
+
+    // Limpar mensagens de "Sua Voz" com senha
+    function limparSugestoes() {
+      const senha = prompt("Digite a senha para limpar as mensagens:");
+      if(senha === "2007") {
+        localStorage.removeItem("sugestoes");
+        document.getElementById("sugestoes-lista").innerHTML = "";
+        alert("Mensagens apagadas com sucesso!");
+      } else {
+        alert("Senha incorreta. Ação negada.");
+      }
+    }
+
+    // Limpar contagem de emojis com senha
+    function limparEmojis() {
+      const senha = prompt("Digite a senha para limpar as reações:");
+      if(senha === "2007") {
+        const ids = ["Ótimo","Bom","Regular","Precisa","Ruim"];
+        ids.forEach(id => document.getElementById(id).textContent = 0);
+        localStorage.removeItem("emojis");
+        alert("Reações resetadas com sucesso!");
+      } else {
+        alert("Senha incorreta. Ação negada.");
+      }
+    }
+  </script>
+</body>
+</html>
